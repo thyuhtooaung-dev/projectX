@@ -1,0 +1,33 @@
+<div class="flex h-screen w-full bg-[#121214] text-zinc-200 font-sans overflow-hidden">
+  <app-chat-sidebar
+    [conversations]="chatService.conversations()"
+    [activeConversationId]="chatService.currentConversationId()"
+    (selectConversation)="onSelectConversation($event)"
+    (newChat)="onNewChat()"
+    (deleteConversation)="onDeleteConversation($event)"
+  ></app-chat-sidebar>
+
+  <main class="flex-1 flex flex-col h-full min-w-0 bg-[#121214] relative">
+    <app-chat-header
+      [conversationId]="chatService.currentConversationId()"
+      [conversationTitle]="chatService.currentConversation()?.title"
+      [modelUsed]="chatService.modelUsed()"
+      [availableModels]="chatService.availableModels()"
+      [selectedModelId]="chatService.selectedModelId()"
+      (modelSelected)="onModelSelected($event)"
+      (newChat)="onNewChat()"
+    ></app-chat-header>
+
+    <app-message-list
+      [messages]="chatService.messages()"
+      [loading]="chatService.loading()"
+      [error]="chatService.error()"
+      [modelUsed]="chatService.modelUsed()"
+    ></app-message-list>
+
+    <app-chat-input
+      [loading]="chatService.loading()"
+      (send)="onSendMessage($event)"
+    ></app-chat-input>
+  </main>
+</div>
