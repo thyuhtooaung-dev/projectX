@@ -54,7 +54,11 @@ export class ChatService {
       if (res.ok) {
         const data: AiModel[] = await res.json();
         this.availableModels.set(data);
-        if (data.length > 0 && !this.selectedModelId()) {
+        if (
+          data.length > 0 &&
+          (!this.selectedModelId() ||
+            !data.some((m) => m.id === this.selectedModelId()))
+        ) {
           this.selectedModelId.set(data[0].id);
         }
       }
