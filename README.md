@@ -1,59 +1,116 @@
-# Client
+# projectX
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.4.
+Frontend application for projectX, a responsive, state-of-the-art conversational AI client built with Angular 22, native Signals, Tailwind CSS v4, and a Shadcn-inspired design system.
 
-## Development server
+---
 
-To start a local development server, run:
+## Architecture Overview
 
-```bash
-ng serve
+The client application implements a modern component-driven architecture using Angular 22 standalone components and reactive Signals for state synchronization.
+
+### Technology Stack
+
+* **Framework**: Angular 22 (Standalone Components, SSR)
+* **Reactivity**: Angular Signals (`signal`, `computed`, `effect`)
+* **Styling**: Tailwind CSS v4 with Shadcn zinc dark mode tokens
+* **Icons**: Lucide Angular
+* **Code Quality**: Biome 2.5 (linter and formatter)
+
+### Project Structure
+
+```
+src/
+├── app/
+│   ├── core/                        # Core models, interfaces, and singletons
+│   │   ├── models/                  # TypeScript data contracts (chat.model.ts)
+│   │   └── services/                # API and streaming service (chat.service.ts)
+│   ├── shared/                      # Reusable, design-system primitives
+│   │   └── ui/
+│   │       ├── button/              # Variant-based button (default, secondary, outline, ghost, destructive)
+│   │       ├── badge/               # Status and model badges
+│   │       └── dropdown/            # OpenRouter model selector dropdown
+│   ├── features/                    # Domain feature modules
+│   │   └── chat/
+│   │       ├── components/
+│   │       │   ├── chat-sidebar/    # Thread list, active thread selector, deletion
+│   │       │   ├── chat-header/     # Thread title, model picker, and actions
+│   │       │   ├── message-list/    # Message stream container and autoscroll
+│   │       │   ├── message-item/    # Individual chat bubble with collapsible reasoning view
+│   │       │   └── chat-input/      # Multi-line input with keyboard send handling
+│   │       └── chat.component.ts    # Container orchestrating chat features
+│   ├── app.component.ts             # Root router outlet wrapper
+│   ├── app.config.ts                # Application providers and routing config
+│   └── app.routes.ts                # Client routes (/ for new chat, /c/:id for thread loading)
+└── environments/                    # Environment-specific configuration
+    ├── environment.ts               # Development environment settings
+    └── environment.production.ts    # Production environment settings
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Environment Configuration
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Configuration files are located in `src/environments/`:
 
-```bash
-ng generate component component-name
-```
+* **`src/environments/environment.ts`**:
+  ```typescript
+  export const environment = {
+    production: false,
+    apiBaseUrl: 'http://localhost:[PORT]/api',
+  };
+  ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+* **`src/environments/environment.production.ts`**:
+  ```typescript
+  export const environment = {
+    production: true,
+    apiBaseUrl: 'http://localhost:[PORT]/api',
+  };
+  ```
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## Installation and Setup
 
-To build the project run:
+1. Install project dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
 
-```bash
-ng build
-```
+2. Start the local development server:
+   ```bash
+   npm start
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. Open your browser and navigate to:
+   ```
+   http://localhost:[PORT]/
+   ```
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Available Scripts
 
-```bash
-ng test
-```
+| Command | Description |
+| :--- | :--- |
+| `npm start` | Start the local Angular dev server on port 4200 |
+| `npm run build` | Build production bundles into `dist/client/` |
+| `npm run watch` | Build in watch mode for development |
+| `npm run lint` | Run Biome linter with unsafe fixes (`biome check --write --unsafe`) |
+| `npm run format` | Format code with Biome (`biome format --write .`) |
+| `npm test` | Run unit tests with Vitest |
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Code Quality Standards
 
-```bash
-ng e2e
-```
+This project uses **Biome** for code formatting, linting, and import management.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Execute Biome checks and auto-fixes:
+  ```bash
+  npm run lint
+  ```
+* Format project files:
+  ```bash
+  npm run format
+  ```
