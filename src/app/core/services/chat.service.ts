@@ -30,9 +30,7 @@ export class ChatService {
   readonly loading = signal<boolean>(false);
   readonly error = signal<string>('');
   readonly availableModels = signal<AiModel[]>([]);
-  readonly selectedModelId = signal<string>(
-    'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
-  );
+  readonly selectedModelId = signal<string>('');
   readonly modelUsed = signal<string>('');
 
   readonly currentConversation = computed(() => {
@@ -54,12 +52,12 @@ export class ChatService {
       if (res.ok) {
         const data: AiModel[] = await res.json();
         this.availableModels.set(data);
-        if (
-          data.length > 0 &&
-          (!this.selectedModelId() ||
-            !data.some((m) => m.id === this.selectedModelId()))
-        ) {
-          this.selectedModelId.set(data[0].id);
+        if (data.length > 0) {
+          const currentId = this.selectedModelId();
+          const isValid = currentId && data.some((m) => m.id === currentId);
+          if (!isValid) {
+            this.selectedModelId.set(data[0].id);
+          }
         }
       }
     } catch (err) {
