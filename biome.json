@@ -22,6 +22,9 @@
       },
       "correctness": {
         "noUnknownTypeSelector": "off"
+      },
+      "style": {
+        "useImportType": "off"
       }
     }
   },
