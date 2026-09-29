@@ -17,7 +17,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideMarkdown({
       markedExtensions: [
-        { provide: MARKED_EXTENSIONS, useValue: markedKatex({ throwOnError: false, output: 'html' }), multi: true },
+        {
+          provide: MARKED_EXTENSIONS,
+          useValue: markedKatex({ throwOnError: false, output: 'html' }),
+          multi: true,
+        },
       ],
     }),
   ],

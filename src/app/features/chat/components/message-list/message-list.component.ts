@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  effect,
-  inject,
-  input,
-} from '@angular/core';
+import { Component, ElementRef, effect, inject, input } from '@angular/core';
 import {
   Bot,
   CircleAlert,
