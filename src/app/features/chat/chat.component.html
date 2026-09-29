@@ -7,7 +7,7 @@
     (deleteConversation)="onDeleteConversation($event)"
   ></app-chat-sidebar>
 
-  <main class="flex-1 flex flex-col h-full min-w-0 bg-[#121214] relative">
+  <main class="flex-1 flex flex-col h-full min-w-0 bg-[#121214] overflow-hidden">
     <app-chat-header
       [conversationId]="chatService.currentConversationId()"
       [conversationTitle]="chatService.currentConversation()?.title"
@@ -19,6 +19,7 @@
     ></app-chat-header>
 
     <app-message-list
+      class="flex-1 min-h-0 overflow-y-auto"
       [messages]="chatService.messages()"
       [loading]="chatService.loading()"
       [error]="chatService.error()"
@@ -26,6 +27,7 @@
     ></app-message-list>
 
     <app-chat-input
+      class="shrink-0"
       [loading]="chatService.loading()"
       (send)="onSendMessage($event)"
     ></app-chat-input>

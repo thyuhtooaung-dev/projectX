@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  type ElementRef,
+  ElementRef,
   effect,
+  inject,
   input,
-  ViewChild,
 } from '@angular/core';
 import {
   Bot,
@@ -22,8 +22,7 @@ import { MessageItemComponent } from '@/features/chat/components/message-item/me
   templateUrl: './message-list.component.html',
 })
 export class MessageListComponent {
-  @ViewChild('scrollContainer')
-  private scrollContainer!: ElementRef<HTMLDivElement>;
+  private readonly host = inject(ElementRef<HTMLElement>);
 
   readonly messages = input.required<ChatMessage[]>();
   readonly loading = input<boolean>(false);
@@ -37,16 +36,15 @@ export class MessageListComponent {
   constructor() {
     effect(() => {
       this.messages();
+      this.loading();
       this.scrollToBottom();
     });
   }
 
   scrollToBottom(): void {
     setTimeout(() => {
-      if (this.scrollContainer?.nativeElement) {
-        this.scrollContainer.nativeElement.scrollTop =
-          this.scrollContainer.nativeElement.scrollHeight;
-      }
+      const el = this.host.nativeElement as HTMLElement;
+      el.scrollTop = el.scrollHeight;
     }, 40);
   }
 }

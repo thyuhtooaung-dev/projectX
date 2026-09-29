@@ -5,8 +5,9 @@ import {
 } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideMarkdown } from 'ngx-markdown';
+import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 import { routes } from './app.routes';
+import markedKatex from 'marked-katex-extension';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    provideMarkdown(),
+    provideMarkdown({
+      markedExtensions: [
+        { provide: MARKED_EXTENSIONS, useValue: markedKatex({ throwOnError: false, output: 'html' }), multi: true },
+      ],
+    }),
   ],
 };

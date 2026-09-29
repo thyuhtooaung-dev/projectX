@@ -163,3 +163,20 @@ markdown th {
   color: #f4f4f5;
   font-weight: 500;
 }
+
+/* KaTeX math rendering */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.6rem 0;
+  margin: 0.5rem 0;
+}
+
+.katex {
+  color: #e4e4e7;
+  font-size: 1em;
+}
+
+.katex-display > .katex {
+  font-size: 1.1em;
+}
